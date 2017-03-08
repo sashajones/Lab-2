@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 import pkgPokerEnum.eCardNo;
 import pkgPokerEnum.eHandStrength;
+import pkgPokerEnum.eRank;
 
 
 
@@ -88,13 +89,60 @@ public class Hand {
 		return h;
 	}
 	
+	public static boolean isFlush(ArrayList<Card> c){
+		
+		boolean isFlush = false;
+		int iCardCount = 0;
+		
+		for (Card c: cards)
+		{
+			for (eSuit suits: eSuit.values())
+			{
+				if (c.geteSuit() == suits) {
+					iCardCount++;
+					
+				}
+			}
+			if (iCardCount > 0)
+			{
+				if (iCardCount == 5)
+					isFlush = true;
+				else
+				{
+					isFlush = false;
+					break;
+				}
+			}
+		}
+	}
 	
 	
+	public static boolean isStraight(ArrayList<Card> c){
+		
+		boolean isStraight = true;
+		int i = 0;
+		if (Hand.isAce(c) == true) {
+			i = 1;
+		} else {
+			i = 0;
+		}
+		
+		for (;i<3; i++) {
+			if (c.get(i).geteRank().getiRankNbr() == c.get(i))
+		}
+		
+		return isStraight;
+	}
 	
 	
-	
-	
-	
+	public static boolean isAce(ArrayList<Card> c)
+	{
+		if (c.get(0).geteRank()==eRank.ACE)
+				return true;
+		else
+			return false;
+		end if
+	}
 	
 	
 	
@@ -166,15 +214,16 @@ public class Hand {
 		if ((h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank() == h.getCardsInHand()
 				.get(eCardNo.ThirdCard.getCardNo()).geteRank())
 				&& (h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank() == h.getCardsInHand()
-						.get(eCardNo.FifthCard.getCardNo()).geteRank())) {
+				.get(eCardNo.FifthCard.getCardNo()).geteRank())) {
 			isFullHouse = true;
 			hs.setHandStrength(eHandStrength.FullHouse);
 			hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank());
 			hs.setLoHand(h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank());
-		} else if ((h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank() == h.getCardsInHand()
+		} 
+		else if ((h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank() == h.getCardsInHand()
 				.get(eCardNo.SecondCard.getCardNo()).geteRank())
 				&& (h.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).geteRank() == h.getCardsInHand()
-						.get(eCardNo.FifthCard.getCardNo()).geteRank())) {
+				.get(eCardNo.FifthCard.getCardNo()).geteRank())) {
 			isFullHouse = true;
 			hs.setHandStrength(eHandStrength.FullHouse);
 			hs.setHiHand(h.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).geteRank());
